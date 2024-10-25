@@ -6,3 +6,6 @@ LIBS=-lncurses
 
 %:	%.c
 	$(CC) $(CFLAGS) $< $(LIBS) -o $@
+
+clean:
+	rm -f o oo *.o $(EXE)

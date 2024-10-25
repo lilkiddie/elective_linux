@@ -68,9 +68,11 @@ int main(int argc, char* argv[]) {
     initscr();
     noecho();
     cbreak();
+
     win = newwin(LINES / 2, COLS / 2, LINES / 3, LINES / 3);
     keypad(win, TRUE);
     wmove(win, 1, 0);
+
     int height = 0;
     int width = 0;
     getmaxyx(win, height, width);
@@ -95,32 +97,39 @@ int main(int argc, char* argv[]) {
                 }
             }
         }
+
         for (int line = 0; line < height; line++) {
             mvwprintw(win, line + 1, 1, "%d: %s\n", line + offset_l + 1, buff[line]);
         }
+
         box(win, 0, 0);
         wrefresh(win);
+
         c = wgetch(win);
-        if (c == 3) {
+        if (c == 3) { // KEY_UP
             if (offset_l != 0) {
                 offset_l--;
             }
         }
-        else if (c == 2) {
+        else if (c == 2) { // KEY_DOWN
             offset_l++;
         }
-        else if (c == 4) {
+        else if (c == 4) { // KEY_LEFT
             if (offset_c != 0) {
                 offset_c--;
             }
         }
-        else if (c == 5) {
+        else if (c == 5) { // KEY_RIGHT
             offset_c++;
         }
-        else if (c == 27) {
+        else if (c == 27) { // ESC
             break;
         }
     }
     endwin();
+
+    for (int i = 0; i < n_lines; i++) {
+        free(content[i].p);
+    }
     return 0;
 }
